@@ -36,6 +36,55 @@ Peca gerarPeca() {
 }
 
 // Insere peça na fila
+
+void trocarPecaAtual() {
+    if (quantidadeFila == 0) {
+        printf("\nFila vazia!\n");
+        return;
+    }
+
+    if (topo == -1) {
+        printf("\nPilha vazia! Nao ha peca para trocar.\n");
+        return;
+    }
+
+    Peca aux;
+
+    aux = fila[frente];
+    fila[frente] = pilha[topo];
+    pilha[topo] = aux;
+
+    printf("\nTroca da peca atual realizada com sucesso!\n");
+}
+
+void trocaMultipla() {
+
+    if (quantidadeFila < 3) {
+        printf("\nA fila nao possui 3 pecas.\n");
+        return;
+    }
+
+    if (topo < 2) {
+        printf("\nA pilha nao possui 3 pecas.\n");
+        return;
+    }
+
+    Peca aux;
+    int i;
+    int indiceFila;
+
+    for (i = 0; i < 3; i++) {
+
+        indiceFila = (frente + i) % TAM_FILA;
+
+        aux = fila[indiceFila];
+        fila[indiceFila] = pilha[topo - i];
+        pilha[topo - i] = aux;
+    }
+
+    printf("\nTroca dos 3 primeiros elementos realizada!\n");
+}   
+
 void enqueue(Peca p) {
     if (quantidadeFila == TAM_FILA) {
         return;
@@ -131,6 +180,8 @@ int main() {
         printf("1 - Jogar peca\n");
         printf("2 - Reservar peca\n");
         printf("3 - Usar peca reservada\n");
+        printf("4 - Trocar peca atual com a reserva\n");
+        printf("5 - Trocar os 3 primeiros da fila com a pilha\n");
         printf("0 - Sair\n");
         printf("Opcao: ");
         scanf("%d", &opcao);
@@ -176,6 +227,14 @@ int main() {
                 }
                 break;
             }
+
+            case 4:
+            trocarPecaAtual();
+             break;
+
+case 5:
+    trocaMultipla();
+    break;
 
             case 0:
                 printf("\nPrograma encerrado.\n");
